@@ -64,7 +64,7 @@ Task definition and creation (osThreadDef(Led1Task, ...))
 
 Function stubs (void StartLed1Task(void const * argument))
 
-NOW implement he task function:
+NOW implement the task function:
 void StartLed1Task(void const * argument)
 {
   for(;;)
@@ -82,3 +82,4 @@ void StartLed2Task(void const * argument)
     osDelay(1000); // Blink every 1s
   }
 }
+
