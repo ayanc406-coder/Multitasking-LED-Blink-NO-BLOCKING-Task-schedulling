@@ -1,0 +1,84 @@
+
+📝 Steps to Add & Name Tasks in CubeMX/CubeIde
+
+1.Create New Project
+
+Open STM32CubeIDE → File → New STM32 Project.
+
+Select your MCU/board (in my case STM32F411CEU6).
+
+Click Finish.
+
+
+2.Clock Configuration
+
+>>Go to Clock Configuration tab.
+
+*Use HSI (default 8 MHz) or configure PLL if needed.
+
+3.GPIO Configuration
+
+>>Go to Pinout & Configuration.
+
+*Enable GPIO outputs for LEDs (example: PA0 and PA7).
+
+*Mode: Output Push-Pull, Pull: No Pull, Speed: Low.
+
+4.Enable USART1(optional for debugging)
+
+5.Middleware → FreeRTOS
+
+*In Middleware, enable FreeRTOS.
+
+*Scheduler settings: CMSIS_V1 or CMSIS_V2 API (default).
+
+*Leave default heap/stack size for now..
+
+*Go to FreeRTOS configuration panel
+
+*A new FreeRTOS tab will appear in the left panel.
+
+*Inside, you’ll see a section called Tasks and Queues.
+
+>>Add New Tasks
+
+Click Add → Task.
+
+Give the task a name (example: Led1Task).
+
+Set its priority  (Normal, Idle, High, etc.).
+
+Define stack size (e.g., 128 words)/Leave it as it is.
+
+Repeat for other tasks
+
+Example: Add another task called Led2Task.
+
+Generate Code
+
+When you click Generate Code, CubeIDE will automatically create:
+
+Task handles (osThreadId Led1TaskHandle;)
+
+Task definition and creation (osThreadDef(Led1Task, ...))
+
+Function stubs (void StartLed1Task(void const * argument))
+
+NOW implement he task function:
+void StartLed1Task(void const * argument)
+{
+  for(;;)
+  {
+    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
+    osDelay(500); // Blink every 500ms
+  }
+}
+
+void StartLed2Task(void const * argument)
+{
+  for(;;)
+  {
+    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
+    osDelay(1000); // Blink every 1s
+  }
+}
